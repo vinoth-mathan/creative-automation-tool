@@ -1,97 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dealership Creative Automation</title>
-    <link rel="stylesheet" href="/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Forge | Dealership Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Dealership Creative Automation</h1>
-            <p>Generate bulk branded creatives in seconds</p>
-        </header>
+  <div class="bg-orb orb-one"></div>
+  <div class="bg-orb orb-two"></div>
 
-        <main>
-            <div class="card">
-                <section class="config-section">
-                    <h3>1. Select Brand & Dealers</h3>
-                    <div class="form-group">
-                        <label for="brand-select">Brand (Account)</label>
-                        <select id="brand-select">
-                            <option value="">Choose a brand...</option>
-                        </select>
-                    </div>
+  <main class="layout">
+    <section class="hero">
+      <!-- <p class="eyebrow">Automation Engineer Assessment</p> -->
+      <h1>Creative automation tool</h1>
+      <p class="subtitle">Generate social creatives in bulk with smart scaling and account-aware dealership mapping.</p>
+    </section>
 
-                    <div id="dealer-list-container" class="dealer-list-container hidden">
-                        <div class="dealer-header">
-                            <label>Dealerships</label>
-                            <button id="select-all" class="btn-text">Select All</button>
-                        </div>
-                        <div id="dealer-list" class="dealer-list">
-                            <!-- Dealers populated here -->
-                        </div>
-                    </div>
-                </section>
+    <section class="panel">
+      <div class="grid">
+        <div class="card">
+          <h2>1. Brand & Dealers</h2>
+          <label class="field-label" for="brand-select">Select Account</label>
+          <select id="brand-select">
+            <option value="">Choose brand</option>
+          </select>
 
-                <section class="upload-section">
-                    <h3>2. Background Image</h3>
-                    <div id="drop-zone" class="drop-zone">
-                        <p>Drag & Drop background image or click to browse</p>
-                        <input type="file" id="bg-input" accept="image/*" hidden>
-                        <img id="preview" class="hidden">
-                    </div>
-                </section>
-
-                <section class="options-section">
-                    <h3>3. Options & Sizes</h3>
-                    
-                    <div class="options-grid">
-                        <div class="logo-options">
-                            <label class="checkbox-container">
-                                <input type="checkbox" id="use-logo" checked>
-                                <span class="checkmark"></span>
-                                Include Logo
-                            </label>
-                            <div id="logo-variants" class="variants">
-                                <label><input type="radio" name="logo-variant" value="light" checked> Light</label>
-                                <label><input type="radio" name="logo-variant" value="dark"> Dark</label>
-                            </div>
-                        </div>
-
-                        <div class="size-options">
-                            <label>Output Sizes</label>
-                            <div class="sizes-grid">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" value="1080x1080" checked>
-                                    <span class="checkmark"></span>
-                                    1:1 (1080x1080)
-                                </label>
-                                <label class="checkbox-container">
-                                    <input type="checkbox" value="1080x1350" checked>
-                                    <span class="checkmark"></span>
-                                    4:5 (1080x1350)
-                                </label>
-                                <label class="checkbox-container">
-                                    <input type="checkbox" value="1080x1920" checked>
-                                    <span class="checkmark"></span>
-                                    9:16 (1080x1920)
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <div class="action-section">
-                    <button id="generate-btn" class="btn-primary" disabled>Generate Creatives</button>
-                    <div id="status" class="status-msg"></div>
-                    <a id="download-link" class="btn-success hidden">Download ZIP Package</a>
-                </div>
+          <div id="dealer-wrap" class="hidden">
+            <div class="row-between">
+              <p class="field-label">Dealerships</p>
+              <button id="select-all" class="ghost-btn" type="button">Select all</button>
             </div>
-        </main>
-    </div>
-    <script src="/script.js"></script>
+            <div id="dealer-list" class="dealer-list"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>2. Background</h2>
+          <label class="upload" id="drop-zone">
+            <input id="bg-input" type="file" accept=".jpg,.jpeg,.png" hidden>
+            <span id="upload-text">Drop JPG/PNG or click to upload</span>
+            <img id="preview" class="hidden" alt="Background preview">
+          </label>
+          <p class="hint">Only JPG/PNG files are accepted.</p>
+        </div>
+
+        <div class="card">
+          <h2>3. Branding Assets</h2>
+
+          <label class="toggle">
+            <input type="checkbox" id="use-logo" checked>
+            <span>Include dealership logo</span>
+          </label>
+
+          <div id="logo-variants" class="radio-group">
+            <label><input type="radio" name="logo-variant" value="light" checked> Light logo</label>
+            <label><input type="radio" name="logo-variant" value="dark"> Dark logo</label>
+          </div>
+
+          <label class="toggle">
+            <input type="checkbox" id="use-extra-asset">
+            <span>Include additional branding asset</span>
+          </label>
+
+          <div id="extra-asset-controls" class="hidden stack-sm">
+            <label class="field-label" for="extra-asset-select">Predefined asset</label>
+            <select id="extra-asset-select">
+              <option value="">None</option>
+            </select>
+
+            <label class="field-label" for="extra-asset-upload">Or upload custom asset</label>
+            <input id="extra-asset-upload" type="file" accept=".jpg,.jpeg,.png">
+            <p class="hint">If upload is selected, it overrides predefined asset.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>4. Output Setup</h2>
+
+          <p class="field-label">Formats</p>
+          <div class="stack-sm" id="sizes-wrap">
+            <label><input type="checkbox" value="1080x1080" checked> Instagram Post 1080x1080</label>
+            <label><input type="checkbox" value="1080x1350" checked> Instagram Post 1080x1350</label>
+            <label><input type="checkbox" value="1080x1920" checked> Instagram Story 1080x1920</label>
+          </div>
+
+          <p class="field-label">Download mode</p>
+          <div class="radio-group" id="download-mode-wrap">
+            <label><input type="radio" name="download-mode" value="zip" checked> ZIP package</label>
+            <label><input type="radio" name="download-mode" value="individual"> Individual files</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="generate-btn" class="primary-btn" disabled>Generate Creatives</button>
+        <p id="status" class="status"></p>
+        <a id="download-link" class="download-btn hidden">Download ZIP</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/script.js"></script>
 </body>
 </html>
