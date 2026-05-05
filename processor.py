@@ -3,6 +3,21 @@ import os
 from PIL import Image
 
 
+def resolve_asset_path(base_dir, raw_path):
+    if not raw_path:
+        return None
+
+    # Normalize mixed Windows/Linux separators from DB values.
+    normalized = str(raw_path).replace('\\', '/').strip()
+
+    # Keep absolute paths as-is after normalization.
+    if os.path.isabs(normalized):
+        return os.path.normpath(normalized)
+
+    # Ensure relative paths are resolved from project root.
+    return os.path.normpath(os.path.join(base_dir, normalized))
+
+
 def process_creative(
     bg_bytes,
     panel_path,
@@ -32,9 +47,9 @@ def process_creative(
     bg = bg.crop((left, top, right, bottom))
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    panel_full_path = os.path.join(base_dir, panel_path)
-    logo_full_path = os.path.join(base_dir, logo_path) if logo_path else None
-    additional_full_path = os.path.join(base_dir, additional_asset_path) if additional_asset_path else None
+    panel_full_path = resolve_asset_path(base_dir, panel_path)
+    logo_full_path = resolve_asset_path(base_dir, logo_path) if logo_path else None
+    additional_full_path = resolve_asset_path(base_dir, additional_asset_path) if additional_asset_path else None
 
     panel = Image.open(panel_full_path).convert('RGBA')
     panel_ratio = panel.height / panel.width

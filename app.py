@@ -2,6 +2,7 @@ import io
 import os
 import sqlite3
 import zipfile
+import re
 from flask import Flask, request, jsonify, send_from_directory, send_file
 from processor import process_creative
 
@@ -13,6 +14,11 @@ SIZE_MAP = {
     '1080x1350': (1080, 1350),
     '1080x1920': (1080, 1920),
 }
+
+
+def safe_slug(value):
+    cleaned = re.sub(r'[^A-Za-z0-9._-]+', '-', (value or '').strip())
+    return cleaned.strip('-') or 'item'
 
 
 def get_db_connection():
@@ -120,6 +126,8 @@ def generate_zip():
                 dealer = conn.execute('SELECT * FROM dealerships WHERE id = ?', (dealer_id,)).fetchone()
                 if not dealer:
                     continue
+                account = conn.execute('SELECT name FROM accounts WHERE id = ?', (dealer['account_id'],)).fetchone()
+                account_name = account['name'] if account else 'account'
 
                 for size_name in sizes:
                     target_size = SIZE_MAP.get(size_name)
@@ -139,7 +147,11 @@ def generate_zip():
                         additional_asset_bytes=additional_asset_bytes,
                     )
 
-                    zipf.writestr(f"{dealer['name']}_{size_name}.jpg", rendered)
+                    filename = (
+                        f"{safe_slug(account_name)}_{safe_slug(dealer['name'])}_"
+                        f"{dealer['id']}_{size_name}.jpg"
+                    )
+                    zipf.writestr(filename, rendered)
 
         memory_zip.seek(0)
         return send_file(memory_zip, mimetype='application/zip', as_attachment=True, download_name='creatives.zip')
