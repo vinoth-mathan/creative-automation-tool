@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealership Creative Automation</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dealership Creative Automation</h1>
+            <p>Generate bulk branded creatives in seconds</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <section class="config-section">
+                    <h3>1. Select Brand & Dealers</h3>
+                    <div class="form-group">
+                        <label for="brand-select">Brand (Account)</label>
+                        <select id="brand-select">
+                            <option value="">Choose a brand...</option>
+                        </select>
+                    </div>
+
+                    <div id="dealer-list-container" class="dealer-list-container hidden">
+                        <div class="dealer-header">
+                            <label>Dealerships</label>
+                            <button id="select-all" class="btn-text">Select All</button>
+                        </div>
+                        <div id="dealer-list" class="dealer-list">
+                            <!-- Dealers populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <section class="upload-section">
+                    <h3>2. Background Image</h3>
+                    <div id="drop-zone" class="drop-zone">
+                        <p>Drag & Drop background image or click to browse</p>
+                        <input type="file" id="bg-input" accept="image/*" hidden>
+                        <img id="preview" class="hidden">
+                    </div>
+                </section>
+
+                <section class="options-section">
+                    <h3>3. Options & Sizes</h3>
+                    
+                    <div class="options-grid">
+                        <div class="logo-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="use-logo" checked>
+                                <span class="checkmark"></span>
+                                Include Logo
+                            </label>
+                            <div id="logo-variants" class="variants">
+                                <label><input type="radio" name="logo-variant" value="light" checked> Light</label>
+                                <label><input type="radio" name="logo-variant" value="dark"> Dark</label>
+                            </div>
+                        </div>
+
+                        <div class="size-options">
+                            <label>Output Sizes</label>
+                            <div class="sizes-grid">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" value="1080x1080" checked>
+                                    <span class="checkmark"></span>
+                                    1:1 (1080x1080)
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" value="1080x1350" checked>
+                                    <span class="checkmark"></span>
+                                    4:5 (1080x1350)
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" value="1080x1920" checked>
+                                    <span class="checkmark"></span>
+                                    9:16 (1080x1920)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="action-section">
+                    <button id="generate-btn" class="btn-primary" disabled>Generate Creatives</button>
+                    <div id="status" class="status-msg"></div>
+                    <a id="download-link" class="btn-success hidden">Download ZIP Package</a>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>
